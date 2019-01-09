@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    restart: always
+    # Traefik labels are suggested as an example for people using Traefik,
+    # remove them if you are using another reverse proxy.
+    labels:
+      traefik.enable: 'true'
+      traefik.frontend.rule: "Host:${HOSTNAME}"
+      traefik.port: '9090'
+    # If you don't want to use a reverse proxy (not suitable for production!)
+    # ports:
+    #  - "9090:9090"
+    volumes:
+      - ./docker-volume/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
